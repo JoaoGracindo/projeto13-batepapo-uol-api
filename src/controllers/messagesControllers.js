@@ -4,7 +4,8 @@ import dayjs from "dayjs";
 const now = Date.now()
 
 export async function getMessages(req, res){
-
+    const {user} = req.headers;
+    const {limit} = req.query
     let messages;
 
     try{
@@ -14,7 +15,11 @@ export async function getMessages(req, res){
         return res.status(500).send(err)
     }
 
-    res.send(messages)
+    const filteredMessages = messages.filter((item) => item.to === "Todos" || item.to === user);
+
+    if(limit) return res.send(filteredMessages.slice(-limit).reverse());
+
+    res.send(filteredMessages.reverse());
 }
 
 export async function postMessages(req, res){
