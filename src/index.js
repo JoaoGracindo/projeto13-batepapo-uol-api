@@ -3,15 +3,16 @@ import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config()
 
-import { signUp, getParticipants, getMessages } from "./controllers/participantsController.js";
-import { userSchema } from "./middlewares/userSchema.js";
+import { signUp, getParticipants } from "./controllers/participantsController.js";
+import { getMessages } from "./controllers/messagesControllers.js";
+import { userValidation } from "./middlewares/userMiddleware.js";
 
 const app = express();
 app.use(json())
 app.use(cors())
 
 app.get("/participants", getParticipants)
-app.post("/participants", signUp)
+app.post("/participants", userValidation, signUp)
 app.get("/messages", getMessages)
 
 
