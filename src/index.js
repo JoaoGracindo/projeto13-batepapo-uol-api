@@ -7,6 +7,7 @@ import { signUp, getParticipants } from "./controllers/participantsController.js
 import { getMessages, postMessages } from "./controllers/messagesControllers.js";
 import { userValidation } from "./middlewares/userMiddleware.js";
 import { messageValidation } from "./middlewares/messageMiddleware.js";
+import { postStatus, inactiveUsersRemoval } from "./controllers/statusController.js";
 
 const app = express();
 app.use(json());
@@ -16,6 +17,10 @@ app.get("/participants", getParticipants);
 app.post("/participants", userValidation, signUp);
 
 app.get("/messages", getMessages);
-app.post("/messages", messageValidation, postMessages)
+app.post("/messages", messageValidation, postMessages);
+
+app.post("/status", postStatus);
+
+setInterval(inactiveUsersRemoval, 5000);
 
 app.listen(process.env.SERVER_URI, () => console.log("Server is listening..."))
