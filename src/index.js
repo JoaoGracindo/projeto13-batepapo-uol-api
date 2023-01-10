@@ -21,6 +21,6 @@ app.post("/messages", messageValidation, postMessages);
 
 app.post("/status", postStatus);
 
-setInterval(inactiveUsersRemoval, 5000);
+setInterval(inactiveUsersRemoval, 15000);
 
 app.listen(process.env.SERVER_URI, () => console.log("Server is listening..."))
