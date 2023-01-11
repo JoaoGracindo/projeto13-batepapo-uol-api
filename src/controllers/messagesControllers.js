@@ -56,15 +56,16 @@ export async function deleteMessages(req, res){
         const userIsValid = await participantsCollections.findOne({name: user});
         const idIsValid = await messagesCollections.findOne({_id: new ObjectId(id)});
     
-        if(!userIsValid) return res.sendStatus(401);
-        if(!idIsValid) return res.sendStatus(404);
+        if(!idIsValid || !userIsValid) return res.sendStatus(404);
+        if(userIsValid.name !== idIsValid.from) return res.sendStatus(401);
 
         await messagesCollections.deleteOne(idIsValid)
 
         return res.sendStatus(200)
 
     }catch(err){
-        return res.send(err)
+        console.log(err)
+        return res.status(500).send(err)
     }
     
 }
