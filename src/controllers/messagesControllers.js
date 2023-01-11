@@ -69,3 +69,32 @@ export async function deleteMessages(req, res){
     }
     
 }
+
+
+export async function updateMessage(req, res){
+    const {id} = req.params;
+    const {to, text, type} = req.body;
+    const from = req.headers.user;
+
+    const messageBody = {
+        to: stripHtml(to).result,
+        text: stripHtml(text).result,
+        type: stripHtml(type).result,
+        from: stripHtml(from).result
+    }
+
+
+
+    try{
+        const validId = await messagesCollections.findOne({_id: new ObjectId(id)});
+        if(!validId) return res.sendStatus(404);
+        
+        await messagesCollections.updateOne({_id: new ObjectId(id)},{$set: messageBody});
+
+    }catch(err){
+        console.log(err)
+        return res.status(500).send(err);
+    }
+
+    return res.sendStatus(201);
+}
