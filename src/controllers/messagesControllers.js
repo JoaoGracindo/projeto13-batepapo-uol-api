@@ -1,6 +1,7 @@
-import { messagesCollections } from "../database/db.js";
+import { messagesCollections, participantsCollections } from "../database/db.js";
 import dayjs from "dayjs";
 import { stripHtml } from "string-strip-html";
+import { ObjectId } from "mongodb";
 
 const now = Date.now()
 
@@ -45,4 +46,25 @@ export async function postMessages(req, res){
     }
 
     return res.sendStatus(201);
+}
+
+export async function deleteMessages(req, res){
+    const user = req.headers.user;
+    const {id} = req.params;
+
+    try{
+        const userIsValid = await participantsCollections.findOne({name: user});
+        const idIsValid = await messagesCollections.findOne({_id: new ObjectId(id)});
+    
+        if(!userIsValid) return res.sendStatus(401);
+        if(!idIsValid) return res.sendStatus(404);
+
+        await messagesCollections.deleteOne(idIsValid)
+
+        return res.sendStatus(200)
+
+    }catch(err){
+        return res.send(err)
+    }
+    
 }
