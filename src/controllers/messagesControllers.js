@@ -1,5 +1,6 @@
 import { messagesCollections } from "../database/db.js";
 import dayjs from "dayjs";
+import { stripHtml } from "string-strip-html";
 
 const now = Date.now()
 
@@ -24,10 +25,18 @@ export async function getMessages(req, res){
 
 export async function postMessages(req, res){
 
-    const messageInformation = req.body;
+    const {to, text, type} = req.body;
     const from = req.headers.user;
 
-    const message = {...messageInformation, from, time: dayjs(now).format('HH:MM:SS') }
+    const cleanInfo = {
+        to: stripHtml(to).result,
+        text: stripHtml(text).result,
+        type: stripHtml(type).result,
+        from: stripHtml(from).result
+    }
+
+    const message = {...cleanInfo, time: dayjs(now).format('HH:MM:SS') };
+
 
     try{
         await messagesCollections.insertOne(message)
