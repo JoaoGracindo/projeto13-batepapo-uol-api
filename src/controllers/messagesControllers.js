@@ -87,8 +87,11 @@ export async function updateMessage(req, res){
 
     try{
         const validId = await messagesCollections.findOne({_id: new ObjectId(id)});
+        const isSameUser = validId.from === from;
+
         if(!validId) return res.sendStatus(404);
-        
+        if(!isSameUser) return res.sendStatus(401);
+
         await messagesCollections.updateOne({_id: new ObjectId(id)},{$set: messageBody});
 
     }catch(err){
