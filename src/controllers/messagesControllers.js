@@ -22,7 +22,7 @@ export async function getMessages(req, res){
 
     if(limit) return res.send(filteredMessages.slice(-limit).reverse());
 
-    res.send(filteredMessages.reverse());
+    return res.send(filteredMessages.reverse());
 }
 
 export async function postMessages(req, res){
@@ -60,13 +60,13 @@ export async function deleteMessages(req, res){
         if(!idIsValid || !userIsValid) return res.sendStatus(404);
         if(userIsValid.name !== idIsValid.from) return res.sendStatus(401);
 
-        await messagesCollections.deleteOne(idIsValid)
-
-        return res.sendStatus(200)
+        await messagesCollections.deleteOne(idIsValid);
+        
+        return res.sendStatus(200);
 
     }catch(err){
-        console.log(err)
-        return res.status(500).send(err)
+        console.log(err);
+        return res.status(500).send(err);
     }
     
 }

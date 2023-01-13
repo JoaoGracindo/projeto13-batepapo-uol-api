@@ -1,11 +1,10 @@
 import { messageSchema } from "./messageSchema.js";
-import { participantsCollections, messagesCollections } from "../database/db.js";
+import { participantsCollections } from "../database/db.js";
 
 export async function messageValidation(req, res, next){
 
     const message = req.body;
     const from = req.headers.user;
-    const {type} = message;
     let userIsValid;
 
     const {error} = messageSchema.validate(message);

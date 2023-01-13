@@ -4,7 +4,7 @@ import { stripHtml } from "string-strip-html";
 import { participantsCollections, messagesCollections } from "../database/db.js";
 import { userSchema } from "../middlewares/userSchema.js";
 
-const now = Date.now()
+const now = Date.now();
 
 
 
@@ -13,8 +13,8 @@ export async function signUp(req, res){
     const name = stripHtml(req.body.name).result;
 
 
-    const validUsername = userSchema.validate({name})
-    if(validUsername.error) return res.send(validUsername.error)
+    const validUsername = userSchema.validate({name});
+    if(validUsername.error) return res.send(validUsername.error);
     const bodyUser = {name, lastStatus: now};
     const bodyMessage = {from: name, to: 'Todos', text: 'entra na sala...', type: 'status', time: dayjs().format('HH:mm:ss')};
 
@@ -26,15 +26,15 @@ export async function signUp(req, res){
         return res.send(err);
     }
 
-    res.sendStatus(201);
+    return res.sendStatus(201);
 }
 
 export async function getParticipants(req, res){
     try{
         const users = await participantsCollections.find({}).toArray();
-        res.send(users);
+       return res.send(users);
 
     }catch(err){
-        res.send(err);
+       return res.send(err);
     }
 }

@@ -7,20 +7,20 @@ export async function postStatus(req, res){
 
     const {user} = req.headers;
     let userIsValid;
-    const updateExpression = {$set: {lastStatus: Date.now()}}
+    const updateExpression = {$set: {lastStatus: Date.now()}};
 
     try{
         userIsValid = await participantsCollections.findOne({name: user});
 
     }catch(err){
-        return res.send(err)
+        return res.send(err);
     }
 
     console.log(userIsValid);
 
-    if(!userIsValid) return res.status(404).send("User not found")
+    if(!userIsValid) return res.status(404).send("User not found");
 
-    await participantsCollections.updateOne({name: user}, updateExpression)
+    await participantsCollections.updateOne({name: user}, updateExpression);
 
     res.sendStatus(200);
 
@@ -28,7 +28,7 @@ export async function postStatus(req, res){
 
 export async function inactiveUsersRemoval(){
     let inactiveUsers;
-    const messageTemplate = {to: 'Todos', text: 'sai da sala...', type: 'status', time: dayjs(now).format('HH:MM:SS')};
+    const messageTemplate = {to: 'Todos', text: 'sai da sala...', type: 'status', time: dayjs().format('HH:mm:ss')};
     const query = {lastStatus: {$lt: Date.now() - 10000}};
 
     try{

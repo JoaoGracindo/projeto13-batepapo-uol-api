@@ -1,7 +1,7 @@
 import express, { json } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-dotenv.config()
+dotenv.config();
 
 import { signUp, getParticipants } from "./controllers/participantsController.js";
 import { getMessages, postMessages, deleteMessages, updateMessage } from "./controllers/messagesControllers.js";
@@ -26,4 +26,4 @@ app.post("/status", postStatus);
 
 setInterval(inactiveUsersRemoval, 15000);
 
-app.listen(5000, () => console.log("Server is listening..."))
+app.listen(5000, () => console.log("Server is listening..."));
