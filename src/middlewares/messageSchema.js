@@ -5,6 +5,6 @@ const messageSchema = Joi.object({
     text: Joi.string().required(),
     type: Joi.equal('message').equal('private_message').required()
 
-})
+});
 
-export {messageSchema}
+export {messageSchema};

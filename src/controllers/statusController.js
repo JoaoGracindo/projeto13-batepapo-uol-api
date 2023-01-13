@@ -28,14 +28,14 @@ export async function postStatus(req, res){
 
 export async function inactiveUsersRemoval(){
     let inactiveUsers;
-    const messageTemplate = {to: 'Todos', text: 'sai da sala...', type: 'status', time: dayjs(now).format('HH:MM:SS')}
-    const query = {lastStatus: {$lt: Date.now() - 10000}}
+    const messageTemplate = {to: 'Todos', text: 'sai da sala...', type: 'status', time: dayjs(now).format('HH:MM:SS')};
+    const query = {lastStatus: {$lt: Date.now() - 10000}};
 
     try{
         inactiveUsers = await participantsCollections.find(query).toArray();
         const statusMessage = inactiveUsers.map(obj => {
             const updateMessage = {...messageTemplate,from:obj.name};
-            return updateMessage
+            return updateMessage;
         })
         if(statusMessage.length !== 0){
             await messagesCollections.insertMany(statusMessage);
@@ -46,6 +46,5 @@ export async function inactiveUsersRemoval(){
     }catch(err){
         return console.log(err);
     }
-    console.log("atualizado")
 
 }

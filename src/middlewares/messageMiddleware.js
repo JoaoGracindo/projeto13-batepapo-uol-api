@@ -12,14 +12,14 @@ export async function messageValidation(req, res, next){
 
     try{
 
-        userIsValid = await participantsCollections.findOne({name: from})
+        userIsValid = await participantsCollections.findOne({name: from});
 
     }catch(err){
-        return res.send(err)
+        return res.send(err);
     }
 
 
-    if(error || !userIsValid) return res.sendStatus(422)
+    if(error || !userIsValid) return res.sendStatus(422);
 
-    next()
+    next();
 }

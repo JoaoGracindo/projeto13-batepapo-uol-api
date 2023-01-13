@@ -8,7 +8,6 @@ import { getMessages, postMessages, deleteMessages, updateMessage } from "./cont
 import { userValidation } from "./middlewares/userMiddleware.js";
 import { messageValidation } from "./middlewares/messageMiddleware.js";
 import { postStatus, inactiveUsersRemoval } from "./controllers/statusController.js";
-import dayjs from "dayjs";
 
 const app = express();
 app.use(json());

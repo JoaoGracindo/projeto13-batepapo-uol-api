@@ -23,7 +23,7 @@ export async function signUp(req, res){
         await messagesCollections.insertOne(bodyMessage);
 
     }catch(err){
-        return res.send(err)
+        return res.send(err);
     }
 
     res.sendStatus(201);
@@ -32,9 +32,9 @@ export async function signUp(req, res){
 export async function getParticipants(req, res){
     try{
         const users = await participantsCollections.find({}).toArray();
-        res.send(users)
+        res.send(users);
 
     }catch(err){
-        res.send(err)
+        res.send(err);
     }
 }

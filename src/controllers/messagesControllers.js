@@ -6,16 +6,16 @@ import { ObjectId } from "mongodb";
 
 export async function getMessages(req, res){
     const {user} = req.headers;
-    const {limit} = req.query
+    const {limit} = req.query;
 
-    if(!(limit > 0) && limit) return res.sendStatus(422)
+    if(!(limit > 0) && limit) return res.sendStatus(422);
     let messages;
 
     try{
-         messages = await messagesCollections.find({}).toArray()
+         messages = await messagesCollections.find({}).toArray();
 
     }catch(err){
-        return res.status(500).send(err)
+        return res.status(500).send(err);
     }
 
     const filteredMessages = messages.filter((item) => item.to === "Todos" || item.to === user || item.from === user);
@@ -35,15 +35,15 @@ export async function postMessages(req, res){
         text: stripHtml(text).result,
         type: stripHtml(type).result,
         from: stripHtml(from).result
-    }
+    };
 
     const message = {...cleanInfo, time: dayjs().format('HH:mm:ss') };
 
 
     try{
-        await messagesCollections.insertOne(message)
+        await messagesCollections.insertOne(message);
     }catch(err){
-        return res.send(err)
+        return res.send(err);
     }
 
     return res.sendStatus(201);
