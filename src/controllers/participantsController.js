@@ -16,7 +16,7 @@ export async function signUp(req, res){
     const validUsername = userSchema.validate({name})
     if(validUsername.error) return res.send(validUsername.error)
     const bodyUser = {name, lastStatus: now};
-    const bodyMessage = {from: name, to: 'Todos', text: 'entra na sala...', type: 'status', time: dayjs(now).format('HH:MM:SS')};
+    const bodyMessage = {from: name, to: 'Todos', text: 'entra na sala...', type: 'status', time: dayjs().format('HH:mm:ss')};
 
     try{
         await participantsCollections.insertOne(bodyUser);

@@ -3,11 +3,12 @@ import dayjs from "dayjs";
 import { stripHtml } from "string-strip-html";
 import { ObjectId } from "mongodb";
 
-const now = Date.now()
 
 export async function getMessages(req, res){
     const {user} = req.headers;
     const {limit} = req.query
+
+    if(limit <= 0) return res.sendStatus(422)
     let messages;
 
     try{
@@ -36,7 +37,7 @@ export async function postMessages(req, res){
         from: stripHtml(from).result
     }
 
-    const message = {...cleanInfo, time: dayjs(now).format('HH:MM:SS') };
+    const message = {...cleanInfo, time: dayjs().format('HH:mm:ss') };
 
 
     try{
