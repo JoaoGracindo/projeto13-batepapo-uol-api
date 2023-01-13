@@ -25,4 +25,4 @@ app.post("/status", postStatus);
 
 setInterval(inactiveUsersRemoval, 15000);
 
-app.listen(process.env.SERVER_URI, () => console.log("Server is listening..."))
+app.listen(5000, () => console.log("Server is listening..."))
