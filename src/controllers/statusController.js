@@ -1,7 +1,6 @@
 import { messagesCollections, participantsCollections } from "../database/db.js";
 import dayjs from "dayjs";
 
-const now = Date.now()
 
 export async function postStatus(req, res){
 
@@ -16,13 +15,12 @@ export async function postStatus(req, res){
         return res.send(err);
     }
 
-    console.log(userIsValid);
 
     if(!userIsValid) return res.status(404).send("User not found");
 
     await participantsCollections.updateOne({name: user}, updateExpression);
 
-    res.sendStatus(200);
+    return res.sendStatus(200);
 
 }
 
@@ -36,7 +34,7 @@ export async function inactiveUsersRemoval(){
         const statusMessage = inactiveUsers.map(obj => {
             const updateMessage = {...messageTemplate,from:obj.name};
             return updateMessage;
-        })
+        });
         if(statusMessage.length !== 0){
             await messagesCollections.insertMany(statusMessage);
             await participantsCollections.deleteMany(query);
@@ -44,7 +42,8 @@ export async function inactiveUsersRemoval(){
 
 
     }catch(err){
-        return console.log(err);
+        return res.status(500).send(err);
     }
+    return;
 
 }

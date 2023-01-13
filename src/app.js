@@ -20,7 +20,7 @@ app.post("/participants", userValidation, signUp);
 app.get("/messages", getMessages);
 app.post("/messages", messageValidation, postMessages);
 app.delete("/messages/:id", deleteMessages);
-app.put("/messages/:id", messageValidation, updateMessage)
+app.put("/messages/:id", messageValidation, updateMessage);
 
 app.post("/status", postStatus);
 

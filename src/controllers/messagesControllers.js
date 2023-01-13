@@ -61,11 +61,11 @@ export async function deleteMessages(req, res){
         if(userIsValid.name !== idIsValid.from) return res.sendStatus(401);
 
         await messagesCollections.deleteOne(idIsValid);
-        
+
         return res.sendStatus(200);
 
     }catch(err){
-        console.log(err);
+
         return res.status(500).send(err);
     }
     
@@ -82,7 +82,7 @@ export async function updateMessage(req, res){
         text: stripHtml(text).result,
         type: stripHtml(type).result,
         from: stripHtml(from).result
-    }
+    };
 
 
 
@@ -96,7 +96,6 @@ export async function updateMessage(req, res){
         await messagesCollections.updateOne({_id: new ObjectId(id)},{$set: messageBody});
 
     }catch(err){
-        console.log(err)
         return res.status(500).send(err);
     }
 
