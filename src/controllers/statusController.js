@@ -24,7 +24,7 @@ export async function postStatus(req, res){
 
 }
 
-export async function inactiveUsersRemoval(){
+export async function inactiveUsersRemoval(req, res){
     let inactiveUsers;
     const messageTemplate = {to: 'Todos', text: 'sai da sala...', type: 'status', time: dayjs().format('HH:mm:ss')};
     const query = {lastStatus: {$lt: Date.now() - 10000}};
