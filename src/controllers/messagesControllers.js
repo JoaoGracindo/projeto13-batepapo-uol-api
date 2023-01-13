@@ -8,7 +8,7 @@ export async function getMessages(req, res){
     const {user} = req.headers;
     const {limit} = req.query
 
-    if(limit <= 0) return res.sendStatus(422)
+    if(!(limit <= 0)) return res.sendStatus(422)
     let messages;
 
     try{
@@ -18,7 +18,7 @@ export async function getMessages(req, res){
         return res.status(500).send(err)
     }
 
-    const filteredMessages = messages.filter((item) => item.to === "Todos" || item.to === user);
+    const filteredMessages = messages.filter((item) => item.to === "Todos" || item.to === user || item.from === user);
 
     if(limit) return res.send(filteredMessages.slice(-limit).reverse());
 
