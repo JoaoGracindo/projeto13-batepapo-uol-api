@@ -8,7 +8,7 @@ export async function getMessages(req, res){
     const {user} = req.headers;
     const {limit} = req.query
 
-    if(!(limit > 0)) return res.sendStatus(422)
+    if(!(limit > 0) && limit) return res.sendStatus(422)
     let messages;
 
     try{
